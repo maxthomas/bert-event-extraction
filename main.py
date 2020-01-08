@@ -1,7 +1,7 @@
 import os
 import copy
 import re
-from _parser import Parser
+from parser import Parser
 import json
 from stanfordcorenlp import StanfordCoreNLP
 import argparse
