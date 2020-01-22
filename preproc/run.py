@@ -12,7 +12,6 @@ app = Flask(__name__)
 
 STATUS_OK = 'healthy'
 
-
 nlp = spacy.load('en_core_web_lg', disable=["tagger", "parser"])
 max_length = os.getenv("MAX_DOCUMENT_LENGTH")
 if max_length:
@@ -68,6 +67,7 @@ def preprocess(cdr):
 
     txt = cdr['extracted_text']
     logging.debug('incoming text: {}'.format(txt))
+    txt = txt.replace('\n',' ')
     doc = nlp(txt)
     sentences = sentence_dict_list(doc)
     post11 = get_stanford_core_data(sentences, Snlp)
