@@ -13,9 +13,8 @@ def get_stanford_core_data(sentences, stanford_nlp):
         try:
             nlp_res_raw = stanford_nlp.annotate(item['sentence'])
             nlp_res = json.loads(nlp_res_raw)
-            #result.append(data)
         except Exception as e:
-            print('[Warning] StanfordCore Exception: ', nlp_res_raw, 'This sentence will be ignored.')
+            print('[Warning] StanfordCore Exception: ', e, 'This sentence will be ignored.')
             print('If you want to include all sentences, please refer to this issue: https://github.com/nlpcl-lab/ace2005-preprocessing/issues/1')
             continue
         tokens = nlp_res['sentences'][0]['tokens'] #from stanford - has 1 index

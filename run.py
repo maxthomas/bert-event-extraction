@@ -6,7 +6,7 @@ import spacy
 from flask import Flask,render_template,url_for,request, jsonify
 
 from stanfordcorenlp import StanfordCoreNLP
-from tokens import find_token_index, fix_entity_index, fix_entity_indices, get_stanford_core_data
+from preproc.tokens import find_token_index, fix_entity_index, fix_entity_indices, get_stanford_core_data
 
 app = Flask(__name__)
 
@@ -19,27 +19,6 @@ if max_length:
 
 sentencizer = nlp.create_pipe("sentencizer")
 nlp.add_pipe(sentencizer)
-
-def sentence_dict_list(doc):
-    """Returns a list of dictionaries for each sentence in a CDR.
-    This is just a few of those necessary for the model.
-    """
-    sentences = []
-    for sent in doc.sents:
-        sentence_dict = {}
-        sentence_dict['sentence'] = sent.text
-        sentence_dict['position'] = [sent.start_char, sent.end_char]
-        entities = []
-        for ent in sent.ents:
-            entity_dict = {}
-            entity_dict['text'] = ent.text
-            entity_dict['position'] = [ent.start_char, ent.end_char]
-            entity_dict['entity-type'] = ent.label_
-            entities.append(entity_dict)
-        sentence_dict['golden-entity-mentions'] = entities
-        sentence_dict['golden-event-mentions'] = []
-        sentences.append(sentence_dict)
-    return sentences
 
 
 class StanfordNLP:
